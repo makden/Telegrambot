@@ -20,7 +20,8 @@ Class TeleBot
            $this->chat_id =  $content["callback_query"]['from']['id'];
         }
 
-        if(isset($content["message"]) AND isset($content["message"]["entities"])){
+        if(isset($content["message"]) AND isset($content["message"]["entities"]))
+        {
             $command = substr($content["message"]["text"],1);
                
             if(method_exists($this,trim($command))){
@@ -73,7 +74,7 @@ Class TeleBot
         echo $this->request("setWebhook",$params);
     }
     
-    public function btn($params){
+    public function key_bord_h($params){
         foreach ($params as $btn){
             $btns[] = $btn;
         }
@@ -86,7 +87,7 @@ Class TeleBot
     }
     
     public function btnPhone($val="Номер телефона"){
-        return ["text" => $val, "request_location" => true];
+        return ["text" => $val, "request_contact" => true];
     }
     
     public function btnGeo($val="Мои координаты"){

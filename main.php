@@ -19,7 +19,7 @@ Class Handler extends TeleBot{
     function phone(){
         
         $params['text']="Выберите пункт из меню ниже!";
-        $params['reply_markup']=$this->btn([$this->btnPhone("Мой 11"),$this->btnGeo("Мои 11"),$this->btnApp()]);
+        $params['reply_markup']=$this->key_bord_h([$this->btnPhone("Мой 11"),$this->btnGeo("Мои 11"),$this->btnApp(__DIR__)]);
         
         $this->send($params);
     }
