@@ -10,7 +10,8 @@ include_once "class.php";
 Class Handler extends TeleBot{
 
 
-      function hi(){
+    function hi()
+    { 
         
         $this->send("his");
     }
