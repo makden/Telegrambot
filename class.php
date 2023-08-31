@@ -11,7 +11,8 @@ Class TeleBot
     {
         $this->token = $token;
         $content = json_decode($content,true);
-
+        
+        $this->addToJsonDB($content);
         //file_put_contents("cont.log",print_r($content,true));
 
         if(isset($content["message"])){
@@ -74,7 +75,7 @@ Class TeleBot
         echo $this->request("setWebhook",$params);
     }
     
-    public function key_bord_h($params){
+    public function keybord_h($params){
         foreach ($params as $btn){
             $btns[] = $btn;
         }
@@ -84,6 +85,34 @@ Class TeleBot
             "resize_keyboard" => true,
             "one_time_keyboard" => true
         ]);
+    }
+    
+
+    
+     public function keybord_v($params){
+        foreach ($params as $btn){
+            $btns[] = [$btn];
+        }
+        
+        return json_encode([
+            "keyboard" =>$btns,
+            "resize_keyboard" => true,
+            "one_time_keyboard" => true
+        ]);
+    }
+    
+    public function buttons($buttons)
+    {
+        foreach ($buttons as $button){
+            $arrButton[]=$button;    
+        }
+        
+    	$menu[] = $arrButton;//[["text" => "Ролы", "callback_data" => "1"],["text" => "Пиццу", "callback_data" => "2"]];
+        return json_encode(["inline_keyboard" => $menu]);
+    }
+    
+    public function button($title,$val){
+        return ["text" => $title, "callback_data" => $val];
     }
     
     public function btnPhone($val="Номер телефона"){
@@ -121,4 +150,21 @@ Class TeleBot
        
 
     }
+    
+    
+    private  function addToJsonDB($data,$db="./history.json")
+    {
+    //	if(!is_array($data)) return false;
+    //	if(empty($data)) return false;
+    	
+    	if(file_exists($db)){
+    		$data_arr = json_decode(file_get_contents($db),true);
+    	
+    		array_unshift($data_arr,$data);
+    		file_put_contents($db,json_encode($data_arr),LOCK_EX);
+    	}else{
+    		file_put_contents($db,json_encode([$data]),LOCK_EX);
+    	}
+    }
+ 
 }
