@@ -32,6 +32,11 @@ Class TeleBot
                 $this->notfindcomamand($command);
             }
         }
+        elseif(isset($content["message"]) AND isset($content["message"]["contact"])) // Если передали телефон
+        {
+            
+            $this->contact($content["message"]["contact"]);
+        }
 
        
     }
