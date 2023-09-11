@@ -40,17 +40,8 @@ Class Handler extends TeleBot{
     
     // вызывается, если отправили контакт
     function contact($contact){
-        $db_users = [
-            "79052221522"=>[
-                "name"=>"Иван Васильевич",
-                "chat_id"=>0,
-            ],
-        
-        ];
-        
+     
         $users_arr = read_json_to_arr("./db/users.json");
-        
-        
         $access = false;
         
         foreach ($users_arr as $phone=>$data){
@@ -73,8 +64,10 @@ Class Handler extends TeleBot{
         }
     }
     
-    function addusr(){
-        $this->sendHTML("Добавить пользователя: \n  - <i>Имя Отчество</i>\n - <i>Телефон</i>");
+    function usrlst(){
+        $params['text']="Открыть таблицу";
+        $params['reply_markup']=$this->buttons([$this->buttonApp("Пользователи","https://bot.z3x.ru/telegram/GeoLocPB_bot/users.html")]);
+        $this->send($params);
     }
     
     

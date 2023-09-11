@@ -14,13 +14,20 @@ Class TeleBot
         
         $this->addToJsonDB($content);
         //file_put_contents("cont.log",print_r($content,true));
+        
+        if(isset($content['msg'],$content['chat_id'])){
+            $this->chat_id = trim($content['chat_id']);
+            $this->sendHTML(trim($content['msg']));
+        }
 
-        if(isset($content["message"])){
+        if(isset($content["message"]))
+        {
            $this->chat_id =  $content["message"]['from']['id'];
         }elseif(isset($content["callback_query"])){
            $this->chat_id =  $content["callback_query"]['from']['id'];
         }
-
+        
+        // Если это команда
         if(isset($content["message"]) AND isset($content["message"]["entities"]))
         {
             $command = substr($content["message"]["text"],1);
@@ -32,6 +39,7 @@ Class TeleBot
                 $this->notfindcomamand($command);
             }
         }
+        // Если это контакт
         elseif(isset($content["message"]) AND isset($content["message"]["contact"])) // Если передали телефон
         {
             
@@ -118,6 +126,14 @@ Class TeleBot
     
     public function button($title,$val){
         return ["text" => $title, "callback_data" => $val];
+    }
+    
+    public function buttonUrl($title,$val){
+        return ["text" => $title, "url" => $val];
+    }
+    
+     public function buttonApp($title,$val){
+        return ["text" => $title, "web_app"=>["url" => $val]];
     }
     
     public function btnPhone($val="Номер телефона"){
