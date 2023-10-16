@@ -13,6 +13,8 @@ include_once "class.php";
 
 //contact(["phone_number"=>"","first_name"=>"","user_id"=>""]) - Если отправлен контакт
 
+//webApp(param) - Если данные передали из app приложения
+
 Class Handler extends TeleBot{
 
 
@@ -62,6 +64,29 @@ Class Handler extends TeleBot{
            
             $this->sendHTML("<b>Я Вас не знаю!</b>! \n  Всего хорошего!");
         }
+    }
+    
+    public function webApp($answer)
+    {
+
+        switch(trim($answer['button_text'])){
+            case 'Открыть приложение':
+                $this->webAppStatus($answer['data']);
+                break;
+            
+            default:
+                $this->sendHTML("Отравленные данные не обратотаны. Обратитесь к разработчику!");
+            break;
+        }
+    }
+    
+    
+    private function webAppStatus($data)
+    { 
+        $data = json_decode($data,true);
+        $data['user_id'] = $this->chat_id;
+        addToJsonDB("./db/data.json",$data);
+        $this->sendHTML("Данные переданы в 1С");
     }
     
     function usrlst(){

@@ -1,9 +1,13 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 'Off'); 
+ini_set('log_errors', 'On');
+ini_set('error_log', $_SERVER['DOCUMENT_ROOT'] . '/logs/php-errors.log');
 Class TeleBot
 {
     
     private $token;
-    private $chat_id;
+    public $chat_id;
     private $host_api="https://api.telegram.org/bot";
     
 
@@ -44,6 +48,11 @@ Class TeleBot
         {
             
             $this->contact($content["message"]["contact"]);
+        }
+        // Если это данные из web app 
+        elseif(isset($content["message"]) AND isset($content["message"]["web_app_data"]))
+        {
+            $this->webApp($content["message"]["web_app_data"]);
         }
 
        
