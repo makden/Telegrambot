@@ -131,7 +131,7 @@ function read_json_to_arr($json="db.json"){
 }
 
 
-$bot = new Handler(file_get_contents('php://input'),"6512374789:AAEqxudxeb1NG0zSrSSJku_JM153v9_M-4Y");
+$bot = new Handler(file_get_contents('php://input'),"ч12ч5ч5ч456646ч456ч46ч456ч4ч4ч64ч6465464аы6а4ы6в4а");
 //$bot->hook("https://bot.z3x.ru/telegram/GeoLocPB_bot/main.php");
 
 
