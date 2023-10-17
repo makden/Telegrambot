@@ -151,8 +151,5 @@ $bot = new Handler(file_get_contents('php://input'),"6512374789:AAEqxudxeb1NG0zS
 //$bot->hook("https://bot.z3x.ru/telegram/GeoLocPB_bot/main.php");
 
 
-<<<<<<< HEAD
 echo '<span style="writing-mode: tb-rl;">(:{)</span>';
-=======
-echo '<span style="writing-mode: tb-rl;">(:{)</span>';
->>>>>>> bb85aad87d773dbc708f51eccf25e0cb519fdd6f
+
