@@ -18,6 +18,8 @@ include_once "class.php";
 Class Handler extends TeleBot{
 
 
+    private $userslist = [];
+
     function hi(){ 
         
         $this->send("his");
@@ -66,6 +68,7 @@ Class Handler extends TeleBot{
         }
     }
     
+    // Вызывается при отправке данных с веб - приложения
     public function webApp($answer)
     {
 
@@ -83,21 +86,34 @@ Class Handler extends TeleBot{
     
     private function webAppStatus($data)
     { 
+        $this->id2phone();
         $data = json_decode($data,true);
         $data['user_id'] = $this->chat_id;
+        $data['phone'] = $this->userslist[$this->chat_id]['phone'];
+        $data['user'] = $this->userslist[$this->chat_id]['user'];
+
         addToJsonDB("./db/data.json",$data);
         $this->sendHTML("Данные переданы в 1С");
     }
     
     function usrlst(){
         $params['text']="Открыть таблицу";
-        $params['reply_markup']=$this->buttons([$this->buttonApp("Пользователи","https://bot.z3x.ru/telegram/GeoLocPB_bot/users.html")]);
+        $params['reply_markup']=$this->buttons([$this->buttonApp("Пользователи","https://bot.z3x.ru/telegram/GeoLocPB_bot/users/index.html")]);
         $this->send($params);
     }
     
     
     
-  
+    private function id2phone(){
+          $users_arr = read_json_to_arr("./db/users.json");
+          
+        foreach ($users_arr as $phone=>$data){
+                $users_arrs[$data['chat_id']]['phone']=$phone;
+                $users_arrs[$data['chat_id']]['user']=$data['name'];
+        }
+        
+        return $this->userslist = $users_arrs;
+    } 
 
     
 }
@@ -131,8 +147,8 @@ function read_json_to_arr($json="db.json"){
 }
 
 
-$bot = new Handler(file_get_contents('php://input'),"ч12ч5ч5ч456646ч456ч46ч456ч4ч4ч64ч6465464аы6а4ы6в4а");
+$bot = new Handler(file_get_contents('php://input'),"6512374789:AAEqxudxeb1NG0zSrSSJku_JM153v9_M-4Y");
 //$bot->hook("https://bot.z3x.ru/telegram/GeoLocPB_bot/main.php");
 
 
-echo "<hr>end";
+echo '<span style="writing-mode: tb-rl;">(:{)</span>';
