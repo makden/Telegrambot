@@ -172,7 +172,8 @@ Class TeleBot
         curl_close($ch);
         $result = json_decode($result,true);
         if(isset($result['ok'])){
-            return $result['description'];
+            //file_put_contents("./usccess.log", print_r($result,true));
+            return $result['result'];
         }else{
             file_put_contents("./error.log", print_r($result,true));
             
